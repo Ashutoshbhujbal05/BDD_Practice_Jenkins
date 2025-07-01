@@ -7,7 +7,7 @@ import io.cucumber.testng.CucumberOptions;
 (
 		features= {"src\\test\\resources\\TutorialsNinja.feature"},
 		glue= {"tutorialNinjaStep","hooks"},
-		plugin= {"pretty","html:target/cucumber/cucumber-reports.html"},
+		plugin= {"pretty","html:target/cucumber/cucumber-reports.html","json:target/cucumber/cucumber-reports1.json"},
 		publish=true
 )
 
