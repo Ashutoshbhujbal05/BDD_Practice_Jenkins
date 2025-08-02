@@ -7,31 +7,40 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactoryClass 
 {
-    static WebDriver driver;
-	
-	public WebDriver initBrowser(String browser)
-	{
-		if(browser.equalsIgnoreCase("chrome"))
-		{
-			driver=new ChromeDriver();
-		}
-		
-		else if(browser.equalsIgnoreCase("firefox"))
-		{
-			driver=new FirefoxDriver();
-		}
-		
-		else if(browser.equalsIgnoreCase("edge"))
-		{
-			driver=new EdgeDriver();
-		}
-		
-		return driver;	   
-	}
-	
-	public static WebDriver getDriver()
-	{
-		return driver;
-	}
+	private static WebDriver driver;
 
+    public WebDriver initBrowser(String browser) {
+        if (browser == null || browser.trim().isEmpty()) {
+            System.out.println("⚠️ Browser is null or empty, defaulting to Chrome.");
+            browser = "chrome";
+        }
+
+        browser = browser.trim().toLowerCase();
+
+        switch (browser) {
+            case "firefox":
+                driver = new FirefoxDriver();
+                System.out.println("✅ Firefox browser launched");
+                break;
+
+            case "edge":
+                driver = new EdgeDriver();
+                System.out.println("✅ Edge browser launched");
+                break;
+
+            case "chrome":
+            default:
+                driver = new ChromeDriver();
+                System.out.println("✅ Chrome browser launched");
+                break;
+        }
+        return driver;
+    }
+
+    public static WebDriver getDriver() {
+        if (driver == null) {
+            throw new RuntimeException("❌ WebDriver is not initialized. Call initBrowser() first.");
+        }
+        return driver;
+    }
 }

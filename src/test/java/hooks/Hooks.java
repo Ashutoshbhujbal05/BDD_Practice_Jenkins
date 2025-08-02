@@ -19,7 +19,7 @@ public class Hooks
 //		FileInputStream fis=new FileInputStream(path);
 //		prop.load(fis);
 		ConfigReader.loadProperties();
-		String browserName=ConfigReader.getProperty("Browser");
+		String browserName=ConfigReader.getProperty("browser");
 //		String browserName=prop.getProperty("Browser");
 		DriverFactoryClass df= new DriverFactoryClass();
 		System.out.println(browserName);

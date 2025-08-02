@@ -16,10 +16,15 @@ public class ConfigReader
             e.printStackTrace();
         }
 
-        // Override browser property if passed from Jenkins
-        String browserFromJenkins = System.getProperty("Browser");
+        // Read both lowercase and uppercase for safety
+        String browserFromJenkins = System.getProperty("browser");
+        if (browserFromJenkins == null || browserFromJenkins.isEmpty()) {
+            browserFromJenkins = System.getProperty("Browser");
+        }
+
         if (browserFromJenkins != null && !browserFromJenkins.isEmpty()) {
-            properties.setProperty("Browser", browserFromJenkins);
+            System.out.println("Overriding browser property from Jenkins: " + browserFromJenkins);
+            properties.setProperty("browser", browserFromJenkins);
         }
     }
     public static String getProperty(String key) {
