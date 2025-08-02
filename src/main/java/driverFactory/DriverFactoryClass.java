@@ -9,9 +9,12 @@ public class DriverFactoryClass
 {
 	private static WebDriver driver;
 
-    public WebDriver initBrowser(String browser) {
+    public static WebDriver initBrowser(String browser) {
+        if (driver != null) {
+            return driver; // ✅ Avoid multiple browsers
+        }
+
         if (browser == null || browser.trim().isEmpty()) {
-            System.out.println("⚠️ Browser is null or empty, defaulting to Chrome.");
             browser = "chrome";
         }
 
@@ -28,7 +31,6 @@ public class DriverFactoryClass
                 System.out.println("✅ Edge browser launched");
                 break;
 
-            case "chrome":
             default:
                 driver = new ChromeDriver();
                 System.out.println("✅ Chrome browser launched");
@@ -42,5 +44,10 @@ public class DriverFactoryClass
             throw new RuntimeException("❌ WebDriver is not initialized. Call initBrowser() first.");
         }
         return driver;
+    }
+    
+ // ✅ Added method
+    public static void resetDriver() {
+        driver = null;
     }
 }

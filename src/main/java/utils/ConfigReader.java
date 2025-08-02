@@ -7,28 +7,31 @@ import java.io.IOException;
 
 public class ConfigReader 
 {
-	private static Properties properties = new Properties();
+	   private static final Properties properties = new Properties();
+	    private static boolean loaded = false;
 
-    public static void loadProperties() {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/CucumberConfig.properties")) {
-            properties.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	    public static void loadProperties() {
+	        if (loaded) return; // ✅ Prevent multiple reloads
+	        try (FileInputStream fis = new FileInputStream("src/test/resources/CucumberConfig.properties")) {
+	            properties.load(fis);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 
-        // Read both lowercase and uppercase for safety
-        String browserFromJenkins = System.getProperty("browser");
-        if (browserFromJenkins == null || browserFromJenkins.isEmpty()) {
-            browserFromJenkins = System.getProperty("Browser");
-        }
+	        String browserFromJenkins = System.getProperty("browser");
+	        if (browserFromJenkins == null || browserFromJenkins.isEmpty()) {
+	            browserFromJenkins = System.getProperty("Browser");
+	        }
 
-        if (browserFromJenkins != null && !browserFromJenkins.isEmpty()) {
-            System.out.println("Overriding browser property from Jenkins: " + browserFromJenkins);
-            properties.setProperty("browser", browserFromJenkins);
-        }
-    }
-    public static String getProperty(String key) {
-        return properties.getProperty(key);
-    }
+	        if (browserFromJenkins != null && !browserFromJenkins.isEmpty()) {
+	            System.out.println("🔄 Overriding browser property from Jenkins: " + browserFromJenkins);
+	            properties.setProperty("browser", browserFromJenkins);
+	        }
 
+	        loaded = true;
+	    }
+
+	    public static String getProperty(String key) {
+	        return properties.getProperty(key);
+	    }
 }

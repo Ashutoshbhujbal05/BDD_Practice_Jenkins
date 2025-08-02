@@ -14,25 +14,23 @@ public class Hooks
 	@Before
 	public void initBrowser() throws IOException
 	{
-//		Properties prop = new Properties();
-//		String path =System.getProperty("user.dir")+"//src//test//resources//CucumberConfig.properties";
-//		FileInputStream fis=new FileInputStream(path);
-//		prop.load(fis);
-		ConfigReader.loadProperties();
-		String browserName=ConfigReader.getProperty("browser");
-//		String browserName=prop.getProperty("Browser");
-		DriverFactoryClass df= new DriverFactoryClass();
-		System.out.println(browserName);
-//		RemoteWebDriverClass def = new RemoteWebDriverClass();
-		driver=df.initBrowser(browserName);
-		driver.manage().window().maximize();
-		driver.manage().deleteAllCookies();
+		ConfigReader.loadProperties();  // ✅ Load only once
+        String browserName = ConfigReader.getProperty("browser");
+        System.out.println("🚀 Starting test in browser: " + browserName);
+
+        driver = DriverFactoryClass.initBrowser(browserName);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
 	}
 	
 	@After(order =1)
 	public void tearDown()
 	{
-		driver.quit();
+		if (driver != null) {
+            driver.quit();
+            System.out.println("✅ Browser closed successfully.");
+        }
+        DriverFactoryClass.resetDriver(); // ✅ Reset static driver to null
 	}
 	
 //	@After(order =2)
