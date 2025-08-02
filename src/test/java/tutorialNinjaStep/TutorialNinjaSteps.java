@@ -19,7 +19,7 @@ public class TutorialNinjaSteps
 	public void the_user_should_be_on_the_tutorial_ninja_home_page() 
 	{
 	    driver=DriverFactoryClass.getDriver();
-	    driver.get("https://tutorialsninja.com/demo/");
+		driver.get("https://tutorialsninja.com/demo/");
 	}
 	
 	@Then("the title of webPage should contains the text {string}")

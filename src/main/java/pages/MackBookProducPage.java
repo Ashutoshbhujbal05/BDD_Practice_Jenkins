@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import driverFactory.DriverFactoryClass;
+
 public class MackBookProducPage
 {
 	WebDriver driver;
@@ -22,7 +24,7 @@ public class MackBookProducPage
 	
 	public MackBookProducPage(WebDriver driver)
 	{
-		this.driver=driver;
+		this.driver=DriverFactoryClass.getDriver();
 		PageFactory.initElements(driver,this);
 	}
 	
@@ -43,7 +45,7 @@ public class MackBookProducPage
 
 	public String getTitle()
 	{
-		String titleOfMacPage=driver.getTitle();
+		String titleOfMacPage=DriverFactoryClass.getDriver().getTitle();
 		return titleOfMacPage;
 	}
 	

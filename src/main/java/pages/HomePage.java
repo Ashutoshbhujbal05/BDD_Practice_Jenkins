@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import driverFactory.DriverFactoryClass;
+
 public class HomePage 
 {
 	WebDriver driver;
@@ -13,7 +15,7 @@ public class HomePage
 	
 	public HomePage(WebDriver driver)
 	{
-		this.driver=driver;
+		this.driver=DriverFactoryClass.getDriver();
 		PageFactory.initElements(driver,this);
 	}
 	
@@ -24,7 +26,7 @@ public class HomePage
 	
 	public String getTitle()
 	{
-		String titleOfHomePage=driver.getTitle();
+		String titleOfHomePage=DriverFactoryClass.getDriver().getTitle();
 		return titleOfHomePage;
 	}
 
