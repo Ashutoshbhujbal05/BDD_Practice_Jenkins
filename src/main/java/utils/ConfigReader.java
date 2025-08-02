@@ -19,7 +19,7 @@ public class ConfigReader
         // Override browser property if passed from Jenkins
         String browserFromJenkins = System.getProperty("Browser");
         if (browserFromJenkins != null && !browserFromJenkins.isEmpty()) {
-            properties.setProperty("browser", browserFromJenkins);
+            properties.setProperty("Browser", browserFromJenkins);
         }
     }
     public static String getProperty(String key) {
