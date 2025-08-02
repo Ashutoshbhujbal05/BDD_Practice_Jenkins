@@ -11,17 +11,17 @@ public class DriverFactoryClass
 	
 	public WebDriver initBrowser(String browser)
 	{
-		if(browser.equals("chrome"))
+		if(browser.equalsIgnoreCase("chrome"))
 		{
 			driver=new ChromeDriver();
 		}
 		
-		else if(browser.equals("firefox"))
+		else if(browser.equalsIgnoreCase("firefox"))
 		{
 			driver=new FirefoxDriver();
 		}
 		
-		else if(browser.equals("edge"))
+		else if(browser.equalsIgnoreCase("edge"))
 		{
 			driver=new EdgeDriver();
 		}
