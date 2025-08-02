@@ -22,7 +22,7 @@ public class Hooks
 		String browserName=ConfigReader.getProperty("Browser");
 //		String browserName=prop.getProperty("Browser");
 		DriverFactoryClass df= new DriverFactoryClass();
-		
+		System.out.println(browserName);
 //		RemoteWebDriverClass def = new RemoteWebDriverClass();
 		driver=df.initBrowser(browserName);
 		driver.manage().window().maximize();
