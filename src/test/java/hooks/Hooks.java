@@ -26,11 +26,7 @@ public class Hooks
 	@After(order =1)
 	public void tearDown()
 	{
-		if (driver != null) {
-            driver.quit();
-            System.out.println("✅ Browser closed successfully.");
-        }
-        DriverFactoryClass.resetDriver(); // ✅ Reset static driver to null
+		 DriverFactoryClass.quitDriver();
 	}
 	
 //	@After(order =2)

@@ -7,47 +7,52 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactoryClass 
 {
-	private static WebDriver driver;
+	 // ThreadLocal for parallel execution
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public static WebDriver initBrowser(String browser) {
-        if (driver != null) {
-            return driver; // ✅ Avoid multiple browsers
-        }
-
-        if (browser == null || browser.trim().isEmpty()) {
+    public static WebDriver initBrowser(String browser) 
+    {
+        if (browser == null || browser.trim().isEmpty())
+        {
             browser = "chrome";
         }
 
-        browser = browser.trim().toLowerCase();
-
-        switch (browser) {
+        WebDriver drv;
+        switch (browser.toLowerCase()) 
+        {
             case "firefox":
-                driver = new FirefoxDriver();
+                drv = new FirefoxDriver();
                 System.out.println("✅ Firefox browser launched");
                 break;
 
             case "edge":
-                driver = new EdgeDriver();
+                drv = new EdgeDriver();
                 System.out.println("✅ Edge browser launched");
                 break;
 
             default:
-                driver = new ChromeDriver();
+                drv = new ChromeDriver();
                 System.out.println("✅ Chrome browser launched");
                 break;
         }
-        return driver;
+
+        // Set WebDriver to current thread
+        driver.set(drv);
+        return getDriver();
     }
 
-    public static WebDriver getDriver() {
-        if (driver == null) {
-            throw new RuntimeException("❌ WebDriver is not initialized. Call initBrowser() first.");
-        }
-        return driver;
+    public static WebDriver getDriver() 
+    {
+        return driver.get();
     }
-    
- // ✅ Added method
-    public static void resetDriver() {
-        driver = null;
+
+    public static void quitDriver() 
+    {
+        if (driver.get() != null) 
+        {
+            driver.get().quit();
+            driver.remove();  // Remove WebDriver instance for the current thread
+            System.out.println("✅ Browser closed successfully.");
+        }
     }
 }
